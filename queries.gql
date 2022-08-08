@@ -1,0 +1,29 @@
+query CollectionProducts($collectionId: ID!, $numProducts: Int!, $cursor: String) {
+  collection(id: $collectionId) {
+    products(first: $numProducts, after: $cursor) {
+      nodes {
+        id
+        handle
+        hasOnlyDefaultVariant
+      }
+      pageInfo{
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+
+query AllProducts($numProducts: Int!, $cursor: String) {
+    products(first: $numProducts, after: $cursor) {
+        nodes {
+            id
+            handle
+            hasOnlyDefaultVariant
+        }
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+    }
+}

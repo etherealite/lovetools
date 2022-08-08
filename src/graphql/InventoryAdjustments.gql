@@ -1,0 +1,87 @@
+query InventoryAdjustments($first: Int, $last: Int, $after: String, $before: String, $locationId: ID, $variantId: ID) {
+    location(id: $locationId) {
+      id
+      name
+      __typename
+    }
+    inventoryHistory(
+      first: $first
+      last: $last
+      after: $after
+      before: $before
+      locationId: $locationId
+      variantId: $variantId
+    ) {
+      edges {
+        node {
+          id
+          createdAt
+          reason
+          staffMember {
+            id
+            name
+            __typename
+          }
+          app {
+            id
+            title
+            __typename
+          }
+          referenceDocumentObject {
+            __typename
+            ... on Order {
+              id
+              name
+              __typename
+            }
+            ... on Location {
+              id
+              name
+              __typename
+            }
+            ... on InventoryTransfer {
+              id
+              name
+              __typename
+            }
+            ... on InventoryMovement {
+              id
+              name
+              __typename
+            }
+            ... on PurchaseOrder {
+              id
+              name
+              __typename
+            }
+            ... on Refund {
+              id
+              returnName
+              order {
+                id
+                name
+                __typename
+              }
+              __typename
+            }
+          }
+          changes(locationId: $locationId, variantId: $variantId) {
+            name
+            quantityAfterChange
+            delta
+            __typename
+          }
+          __typename
+        }
+        cursor
+        __typename
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        __typename
+      }
+      __typename
+    }
+  }
+  
